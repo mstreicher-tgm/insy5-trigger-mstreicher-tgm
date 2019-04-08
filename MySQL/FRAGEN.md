@@ -45,7 +45,7 @@ Beantworte folgende Kontrollfragen:
 
 - Welche der folgenden Kombinationen / Zugriffe sind zulässig? Ergänze die folgende Tabelle! Begründe die Aussagen!
 
-  ![Tabelle](IMG\tablle.png)
+  ![Tabelle](C:\Users\Matthias Streicher\AppData\Roaming\Typora\typora-user-images\1554749808470.png)
 
   **Antwort:** 
 
