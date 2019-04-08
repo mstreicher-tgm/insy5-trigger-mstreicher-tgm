@@ -66,5 +66,4 @@ DELIMITER ;
 ### Links
 
 - Übungen: [Klick](UEBUNGEN.md)
-
 - Kontrollfragen: [Klick](FRAGEN.md)
