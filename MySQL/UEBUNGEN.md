@@ -11,7 +11,7 @@ ergänze das DDL-Script um folgende Trigger-Definitionen:
   ```mysql
   DELIMITER //
   CREATE TRIGGER rechnung_i_a 
-  	AFTER INSERT ON rechnung
+  	BEFORE INSERT ON rechnung
   	FOR EACH ROW
   	BEGIN
   		if NEW.datum IS NULL THEN
@@ -27,7 +27,21 @@ ergänze das DDL-Script um folgende Trigger-Definitionen:
   gespeichert werden. PK (snr, datum).
 
   ```mysql
-  
+  CREATE TABLE aenderung (
+             snr         INTEGER,
+             datum 		 DATE,
+             aenderung   DECIMAL(6,2),
+             PRIMARY KEY (snr)
+             );
+             
+  DELIMITER //
+  CREATE TRIGGER speise_a_u
+  	AFTER UPDATE ON speise
+  	FOR EACH ROW
+  	BEGIN
+  		INSERT INTO aenderung VALUES (NEW.snr, CURRENT_DATE, NEW.preis - OLD.preis);
+  	END; //
+  DELIMITER ;
   ```
   
 - Wenn in der Tabelle bestellung ein Datensatz gelöscht wird, soll ein zusätzlicher
