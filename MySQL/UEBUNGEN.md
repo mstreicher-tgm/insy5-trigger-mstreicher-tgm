@@ -28,11 +28,11 @@ ergänze das DDL-Script um folgende Trigger-Definitionen:
 
   ```mysql
   CREATE TABLE aenderung (
-             snr         INTEGER,
-             datum 		 DATE,
-             aenderung   DECIMAL(6,2),
-             PRIMARY KEY (snr)
-             );
+      snr         INTEGER,
+      datum 		 DATE,
+      aenderung   DECIMAL(6,2),
+      PRIMARY KEY (snr, datum)
+  );
              
   DELIMITER //
   CREATE TRIGGER speise_a_u
@@ -43,12 +43,31 @@ ergänze das DDL-Script um folgende Trigger-Definitionen:
   	END; //
   DELIMITER ;
   ```
-  
+
 - Wenn in der Tabelle bestellung ein Datensatz gelöscht wird, soll ein zusätzlicher
   Datensatz in der Tabelle bestellstorno gespeichert werden.
 
+  ```mysql
+  CREATE TABLE bestellstorno (
+      anzahl      SMALLINT,
+      rnr         INTEGER,
+      snr         INTEGER,
+      PRIMARY KEY (rnr, snr)
+  );
+  
+  DELIMITER //
+  CREATE TRIGGER bestellung_a_d
+  	AFTER DELETE ON bestellung
+  	BEGIN
+  		INSERT INTO bestellstorno VALUES (OLD.anzahl, OLD.rnr, OLD.snr);
+  	END;//
+  DELIMITER ;
+  ```
+
 - In der Tabelle statistik soll datumsabhängig die Anzahl aller im Restaurant
   angebotenen Speisen dokumentiert werden. Erstelle alle erforderlichen Definitionen!
+
+  
 
 - Die ENGINE=MYISAM gestattet die Verwendung von Triggern. Realisiere eine 1:NBeziehung mit der ENGINE=MYISAM, d.h. das FK-Constraint und die CASCADEVerarbeitung sollen mittels Triggern nachgebildet werden.
 
