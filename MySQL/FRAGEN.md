@@ -7,9 +7,7 @@ Beantworte folgende Kontrollfragen:
 - Sind mehrere Trigger für dasselbe Aktivierungs-Event (z.B. BEFORE INSERT ON xxx)
   zulässig?
 
-  **Antwort:**
-
-  *Das ist eine Antwort*
+  **Antwort:** *Nein, s dürfen keine zwei Trigger einer Tabelle dieselbe Aktionszeit und dasselbe Trigger-Ereignis haben.*
 
   
 
@@ -29,19 +27,15 @@ Beantworte folgende Kontrollfragen:
 - Was bewirkt das Constraint NOT NULL in Kombination mit einem BEFORE-Trigger?
   IF NEW.xxx IS NULL THEN SET NEW.xxx = ... END IF;
 
-  **Antwort:** 
-
-  *Das ist eine Antwort*
+  **Antwort:**  *Das ist eine Antwort*
 
   
 
 - Kann in einem Trigger auf Datensätze einer anderen Tabelle zugegriffen werden?
 
-  **Antwort:** 
+  **Antwort:**  *Ja, Trigger können auch DML-Anweisungen für Änderungen in anderen Tabellen enthalten.*
 
-  *Das ist eine Antwort*
-
-  
+   
 
 - Welche der folgenden Kombinationen / Zugriffe sind zulässig? Ergänze die folgende Tabelle! Begründe die Aussagen!
 
