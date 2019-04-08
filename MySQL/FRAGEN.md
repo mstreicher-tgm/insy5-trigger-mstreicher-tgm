@@ -39,7 +39,7 @@ Beantworte folgende Kontrollfragen:
 
 - Welche der folgenden Kombinationen / Zugriffe sind zulässig? Ergänze die folgende Tabelle! Begründe die Aussagen!
 
-  ![Tabelle](C:\Users\Matthias Streicher\AppData\Roaming\Typora\typora-user-images\1554749808470.png)
+  ![Tabelle](https://raw.githubusercontent.com/mstreicher-tgm/insy5-trigger-mstreicher-tgm/master/IMG/tablle.png>)
 
   **Antwort:** 
 
