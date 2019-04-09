@@ -1,5 +1,7 @@
+\c template1
 DROP DATABASE restaurant;
 CREATE DATABASE restaurant;
+\c restaurant
 
 CREATE TABLE kellner (
              knr         INTEGER,
@@ -65,17 +67,27 @@ INSERT INTO bestellung VALUES (9, 4, 1);
 INSERT INTO bestellung VALUES (9, 5, 1);
 INSERT INTO bestellung VALUES (9, 6, 2);
 
+CREATE TABLE aenderung (
+    snr         INTEGER,
+    datum 		 DATE,
+    aenderung   DECIMAL(6,2),
+    PRIMARY KEY (snr, datum)
+    FOREIGN KEY (snr) REFERENCES speise (snr)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
 
-DELIMITER //
-CREATE TRIGGER rechnung_b_i
-  BEFORE INSERT ON rechnung
+CREATE FUNCTION speise_a_u() RETURNS trigger AS $$
+  BEGIN
+    INSERT INTO aenderung VALUES (NEW.snr, CURRENT_DATE, NEW.preis - OLD.preis);
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_speise_a_u
+	AFTER UPDATE ON speise
 	FOR EACH ROW
-	BEGIN
-		if NEW.datum IS NULL THEN
-			SET NEW.datum = CURRENT_DATE;
-		END IF;
-	END;//
-DELIMITER ;
+  EXECUTE PROCEDURE speise_a_u();
 
-INSERT INTO rechnung VALUES (7, NULL, 3, "offen", 3);
-SELECT * FROM rechnung WHERE rnr = 7;
+UPDATE speise SET preis = 24 WHERE snr = 8;
+SELECT * FROM preis WHERE snr = 8;

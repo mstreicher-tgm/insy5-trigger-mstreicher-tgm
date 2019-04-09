@@ -1,5 +1,7 @@
+\c template1
 DROP DATABASE restaurant;
 CREATE DATABASE restaurant;
+\c restaurant
 
 CREATE TABLE kellner (
              knr         INTEGER,
@@ -66,16 +68,19 @@ INSERT INTO bestellung VALUES (9, 5, 1);
 INSERT INTO bestellung VALUES (9, 6, 2);
 
 
-DELIMITER //
-CREATE TRIGGER rechnung_b_i
+CREATE FUNCTION rechnung_b_i() RETURNS trigger AS $$
+  BEGIN
+    IF NEW.datum IS NULL THEN
+      NEW.datum := current_date;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE trigger trigger_rechnung_b_i
   BEFORE INSERT ON rechnung
-	FOR EACH ROW
-	BEGIN
-		if NEW.datum IS NULL THEN
-			SET NEW.datum = CURRENT_DATE;
-		END IF;
-	END;//
-DELIMITER ;
+  FOR EACH ROW
+  EXECUTE PROCEDURE rechnung_b_i();
 
 INSERT INTO rechnung VALUES (7, NULL, 3, "offen", 3);
 SELECT * FROM rechnung WHERE rnr = 7;

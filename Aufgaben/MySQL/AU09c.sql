@@ -69,14 +69,7 @@ CREATE TABLE bestellstorno (
     anzahl      SMALLINT,
     rnr         INTEGER,
     snr         INTEGER,
-    datum		DATE,
-    PRIMARY KEY (rnr, snr)
-    FOREIGN KEY (snr) REFERENCES rechnung (rnr)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
-    FOREIGN KEY (snr) REFERENCES speise (snr)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+    datum		    DATE
 );
 
 DELIMITER //
@@ -86,3 +79,6 @@ CREATE TRIGGER bestellung_a_d
 		INSERT INTO bestellstorno VALUES (OLD.anzahl, OLD.rnr, OLD.snr, CURRENT_DATE);
 	END;//
 DELIMITER ;
+
+DELETE FROM bestellung WHERE rnr = 1 AND snr = 1;
+SELECT * FROM bestellstorno;

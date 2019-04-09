@@ -1,5 +1,7 @@
+\c template1
 DROP DATABASE restaurant;
 CREATE DATABASE restaurant;
+\c restaurant
 
 CREATE TABLE kellner (
              knr         INTEGER,
@@ -66,16 +68,24 @@ INSERT INTO bestellung VALUES (9, 5, 1);
 INSERT INTO bestellung VALUES (9, 6, 2);
 
 
-DELIMITER //
-CREATE TRIGGER rechnung_b_i
-  BEFORE INSERT ON rechnung
-	FOR EACH ROW
-	BEGIN
-		if NEW.datum IS NULL THEN
-			SET NEW.datum = CURRENT_DATE;
-		END IF;
-	END;//
-DELIMITER ;
+CREATE TABLE bestellstorno (
+    anzahl      SMALLINT,
+    rnr         INTEGER,
+    snr         INTEGER,
+    datum		    DATE
+);
 
-INSERT INTO rechnung VALUES (7, NULL, 3, "offen", 3);
-SELECT * FROM rechnung WHERE rnr = 7;
+CREATE FUNCTION bestellung_a_d() RETURNS trigger AS $$
+  BEGIN
+    INSERT INTO bestellstorno VALUES (OLD.anzahl, OLD.rnr, OLD.snr, CURRENT_DATE);
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_bestellung_a_d
+	AFTER DELETE ON bestellung
+  FOR EACH ROW
+  EXECUTE PROCEDURE bestellung_a_d();
+
+DELETE FROM bestellung WHERE rnr = 1 AND snr = 1;
+SELECT * FROM bestellstorno;
