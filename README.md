@@ -13,10 +13,11 @@ Trigger können eingesetzt werden, um:
 - Aktivitäten in der Datenbank zu dokumentieren
   (z.B. um Versionskennzeichen bei Änderungen zu erhöhen, Log-Files zu erstellen, etc.).
 
-## Links
+## MySQL
+See More Here: [Klick](Documentation/MySQL/README.md)
 
-- MySQL: [Klick](MySQL/README.md)
-- PostgreSQL: [Klick](PostgreSQL/README.md)
+## PostgreSQL
+See More Here: [Klick](Documentation/PostgreSQL/README.md)
 
-
-
+## Kontrollfragen
+See More Here: [Klick](FRAGEN.md)
